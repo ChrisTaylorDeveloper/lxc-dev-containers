@@ -16,8 +16,8 @@ fi
 
 lxc launch ubuntu:24.04 "$1"
 
-lxc exec "$1" -- /bin/bash -c '
+lxc exec "$1" -- /bin/sh -c '
   adduser --disabled-password --gecos "" sammy
-  echo -e "sammy:sam" | chpasswd
   usermod -aG sudo sammy
-  '
+  echo "sammy:sam" | chpasswd
+'
