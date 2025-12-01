@@ -15,3 +15,9 @@ if [ $grep_status -eq 0 ]; then
 fi
 
 lxc launch ubuntu:24.04 "$1"
+
+lxc exec "$1" -- /bin/bash -c '
+  adduser --disabled-password --gecos "" sammy
+  echo -e "sammy:sam" | chpasswd
+  usermod -aG sudo sammy
+  '
