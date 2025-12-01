@@ -16,8 +16,16 @@ fi
 
 lxc launch ubuntu:24.04 "$1"
 
-lxc exec "$1" -- /bin/sh -c '
+lxc config set "$1" boot.autostart false
+
+lxc exec "$1" -- /bin/bash -c '
   adduser --disabled-password --gecos "" sammy
   usermod -aG sudo sammy
   echo "sammy:sam" | chpasswd
 '
+
+# Now do a manual install of nix package manager.
+# 1. lxc exec the_container -- su sammy
+# 2. Run the multi-user install command from https://nixos.org/download/#download-nix
+# Snapshot this point.
+# TODO: non-interactive install of Nix package manager.
