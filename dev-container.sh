@@ -20,6 +20,14 @@ lxc launch ubuntu:24.04 "$1"
 # Do not start the container just because the host has started!
 lxc config set "$1" boot.autostart false
 
+# Need to add these:
+# sudo apt-get install unzip
+# set -o vi
+# set correct git author name and email in /home/ubuntu/.gitconfig
+# install neovim
+# set git editor to nvim
+# git config --global core.editor "vim"
+
 lxc exec "$1" -- mkdir --parents /home/ubuntu/.config/nvim
 echo Sleeping ...
 sleep 4
