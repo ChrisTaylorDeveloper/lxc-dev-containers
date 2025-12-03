@@ -20,6 +20,9 @@ lxc launch ubuntu:24.04 "$1"
 # Do not start the container just because the host has started!
 lxc config set "$1" boot.autostart false
 
+# TODO: Should probably run all these commands as the
+# ubuntu user e.g. lxc exec "$1" --user 1000 -- the_cmd
+
 sleep 4
 lxc exec "$1" -- wget -O /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-x86_64.appimage
 lxc exec "$1" -- chmod 755 /usr/local/bin/nvim
@@ -28,6 +31,7 @@ sleep 4
 lxc exec "$1" -- mkdir --parents /home/ubuntu/.config/nvim
 lxc exec "$1" -- git clone https://github.com/ChrisTaylorDeveloper/LazyVim.git /home/ubuntu/.config/nvim
 
+# TODO: Then I wouldn't need this
 lxc exec "$1" -- chown -R ubuntu:ubuntu /home/ubuntu/
 
 lxc exec "$1" --user 1000 -- sudo apt-get install unzip
