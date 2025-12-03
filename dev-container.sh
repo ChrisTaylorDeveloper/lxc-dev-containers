@@ -17,28 +17,25 @@ fi
 
 lxc launch ubuntu:24.04 "$1"
 
-# Do not start the container just because the host has started!
+# Do not start container just because host has started!
 lxc config set "$1" boot.autostart false
 
-# TODO: Should probably run all these commands as the
-# ubuntu user e.g. lxc exec "$1" --user 1000 -- the_cmd
-
+# Install Neovim
 sleep 4
-lxc exec "$1" -- wget -O /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-x86_64.appimage
-lxc exec "$1" -- chmod 755 /usr/local/bin/nvim
+lxc exec "$1" --user 1000 -- sudo wget -O /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-x86_64.appimage
+lxc exec "$1" --user 1000 -- sudo chmod 755 /usr/local/bin/nvim
 
+# Install my LazyVim config
 sleep 4
-lxc exec "$1" -- mkdir --parents /home/ubuntu/.config/nvim
-lxc exec "$1" -- git clone https://github.com/ChrisTaylorDeveloper/LazyVim.git /home/ubuntu/.config/nvim
+lxc exec "$1" --user 1000 -- mkdir --parents /home/ubuntu/.config/nvim
+lxc exec "$1" --user 1000 -- git clone https://github.com/ChrisTaylorDeveloper/LazyVim.git /home/ubuntu/.config/nvim
 
-# TODO: Then I wouldn't need this
-lxc exec "$1" -- chown -R ubuntu:ubuntu /home/ubuntu/
+lxc exec "$1" --user 1000 -- sudo apt update
+lxc exec "$1" --user 1000 -- sudo apt -y install unzip
+lxc exec "$1" --user 1000 -- sudo apt -y install default-jre
+lxc exec "$1" --user 1000 -- sudo apt -y install default-jdk
 
-lxc exec "$1" --user 1000 -- sudo apt-get install unzip
-
-# Need to add these:
-# sudo apt-get install unzip
+# TODO: Add these:
 # set -o vi
 # set correct git author name and email in /home/ubuntu/.gitconfig
-# set git editor to nvim
 # git config --global core.editor "vim"
