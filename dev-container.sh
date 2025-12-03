@@ -24,8 +24,10 @@ sleep 4
 lxc exec "$1" -- wget -O /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-x86_64.appimage
 lxc exec "$1" -- chmod 755 /usr/local/bin/nvim
 
-# chmod u+x nvim-linux-x86_64.appimage
-# ./nvim-linux-x86_64.appimage
+lxc exec "$1" -- mkdir --parents /home/ubuntu/.config/nvim
+sleep 4
+lxc exec "$1" -- git clone https://github.com/ChrisTaylorDeveloper/LazyVim.git /home/ubuntu/.config/nvim
+lxc exec "$1" -- chown -R ubuntu:ubuntu /home/ubuntu/
 
 # Need to add these:
 # sudo apt-get install unzip
@@ -34,14 +36,3 @@ lxc exec "$1" -- chmod 755 /usr/local/bin/nvim
 # install neovim
 # set git editor to nvim
 # git config --global core.editor "vim"
-
-lxc exec "$1" -- mkdir --parents /home/ubuntu/.config/nvim
-sleep 4
-lxc exec "$1" -- git clone https://github.com/ChrisTaylorDeveloper/LazyVim.git /home/ubuntu/.config/nvim
-lxc exec "$1" -- chown -R ubuntu:ubuntu /home/ubuntu/
-
-# Now, manually install nix package manager.
-# 1. lxc exec the_container -- su ubuntu
-# 2. Run multi-user install command on https://nixos.org/download/#download-nix
-# Snapshot this point.
-# TODO: non-interactive install of Nix package manager.
