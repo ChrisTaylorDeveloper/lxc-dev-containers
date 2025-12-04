@@ -20,8 +20,15 @@ lxc launch ubuntu:24.04 "$1"
 # Do not start container next time host starts
 lxc config set "$1" boot.autostart false
 
-sleep 3
+sleep 4
+
 lxc exec "$1" --user 1000 -- sudo apt update
+
+# Git config
+lxc exec "$1" --user 1000 -- bash -c 'touch /home/ubuntu/.gitconfig'
+lxc exec "$1" --user 1000 -- bash -c 'HOME=/home/ubuntu; export HOME; git config --global user.name "Chris Taylor"'
+lxc exec "$1" --user 1000 -- bash -c 'HOME=/home/ubuntu; export HOME; git config --global user.email "chris@christaylordeveloper.co.uk"'
+lxc exec "$1" --user 1000 -- bash -c 'HOME=/home/ubuntu; export HOME; git config --global core.editor "vim"'
 
 # Create a public key
 lxc exec "$1" --user 1000 -- sh -c 'ssh-keygen -N "" -f /home/ubuntu/.ssh/id_ed25519'
@@ -31,20 +38,13 @@ lxc exec "$1" --user 1000 -- sudo apt -y install unzip
 lxc exec "$1" --user 1000 -- sudo apt -y install build-essential
 
 # Install Neovim appimage
-sleep 3
 lxc exec "$1" --user 1000 -- sudo wget -O /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-x86_64.appimage
 lxc exec "$1" --user 1000 -- sudo chmod 755 /usr/local/bin/nvim
 
 # Install my own LazyVim config
-sleep 3
 lxc exec "$1" --user 1000 -- mkdir --parents /home/ubuntu/.config/nvim
 lxc exec "$1" --user 1000 -- git clone https://github.com/ChrisTaylorDeveloper/LazyVim.git /home/ubuntu/.config/nvim
 
 # Install Java
 lxc exec "$1" --user 1000 -- sudo apt -y install default-jre
 lxc exec "$1" --user 1000 -- sudo apt -y install default-jdk
-
-# TODO: Add these:
-# set -o vi
-# set correct git author name and email in /home/ubuntu/.gitconfig
-# git config --global core.editor "vim"
