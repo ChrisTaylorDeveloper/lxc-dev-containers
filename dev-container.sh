@@ -24,6 +24,9 @@ lxc config set "$1" boot.autostart false
 sleep 3
 lxc exec "$1" --user 1000 -- sudo apt update
 
+# Create a public key
+lxc exec "$1" --user 1000 -- sh -c 'ssh-keygen -N "" -f /home/ubuntu/.ssh/id_ed25519'
+
 # Install Chrome, so we can use it headless
 lxc exec "$1" --user 1000 -- sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 lxc exec "$1" --user 1000 -- sudo apt -y install ./google-chrome-stable_current_amd64.deb
