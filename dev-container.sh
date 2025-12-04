@@ -15,23 +15,33 @@ if [ $grep_status -eq 0 ]; then
   lxc rm --force "$1"
 fi
 
+# Launch container for first time
 lxc launch ubuntu:24.04 "$1"
 
-# Do not start container just because host has started!
+# Do not start container when host starts.
 lxc config set "$1" boot.autostart false
 
+sleep 3
+lxc exec "$1" --user 1000 -- sudo apt update
+
+# Install Chrome, so we can use it headless
+lxc exec "$1" --user 1000 -- sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+lxc exec "$1" --user 1000 -- sudo apt -y install ./google-chrome-stable_current_amd64.deb
+
 # Install Neovim
-sleep 4
+sleep 3
 lxc exec "$1" --user 1000 -- sudo wget -O /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-x86_64.appimage
 lxc exec "$1" --user 1000 -- sudo chmod 755 /usr/local/bin/nvim
 
 # Install my LazyVim config
-sleep 4
+sleep 3
 lxc exec "$1" --user 1000 -- mkdir --parents /home/ubuntu/.config/nvim
 lxc exec "$1" --user 1000 -- git clone https://github.com/ChrisTaylorDeveloper/LazyVim.git /home/ubuntu/.config/nvim
 
-lxc exec "$1" --user 1000 -- sudo apt update
+# Install miscellaneous tools
 lxc exec "$1" --user 1000 -- sudo apt -y install unzip
+
+# Install Java
 lxc exec "$1" --user 1000 -- sudo apt -y install default-jre
 lxc exec "$1" --user 1000 -- sudo apt -y install default-jdk
 
