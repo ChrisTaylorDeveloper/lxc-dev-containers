@@ -34,8 +34,12 @@ lxc exec "$1" --user 1000 -- bash -c 'HOME=/home/ubuntu; export HOME; git config
 lxc exec "$1" --user 1000 -- sh -c 'ssh-keygen -N "" -f /home/ubuntu/.ssh/id_ed25519'
 
 # Install miscellaneous tools
-lxc exec "$1" --user 1000 -- sudo apt -y install unzip
 lxc exec "$1" --user 1000 -- sudo apt -y install build-essential
+lxc exec "$1" --user 1000 -- sudo apt -y install unzip
+
+# Install Node and Node package manager.
+lxc exec "$1" --user 1000 -- sudo apt -y install nodejs
+lxc exec "$1" --user 1000 -- sudo apt -y install npm
 
 # Install Neovim appimage
 lxc exec "$1" --user 1000 -- sudo wget -O /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-x86_64.appimage
