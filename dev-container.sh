@@ -42,6 +42,11 @@ lxc exec "$1" --user 1000 -- sudo apt -y install unzip
 lxc exec "$1" --user 1000 -- sudo apt -y install nodejs
 lxc exec "$1" --user 1000 -- sudo apt -y install npm
 
+# Install Lua
+# TODO: Install Lua Rocks also?
+# TODO: Do I need this?
+# lxc exec "$1" --user 1000 -- sudo apt -y install lua5.4
+
 # Install Neovim appimage
 lxc exec "$1" --user 1000 -- sudo wget -O /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-x86_64.appimage
 lxc exec "$1" --user 1000 -- sudo chmod 755 /usr/local/bin/nvim
