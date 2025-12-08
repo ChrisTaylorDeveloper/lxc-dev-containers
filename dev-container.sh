@@ -1,4 +1,5 @@
 #!/bin/bash
+# TODO: try with -e
 
 # Usage
 if [ -z "$1" ]; then
