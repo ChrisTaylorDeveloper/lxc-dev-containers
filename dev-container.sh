@@ -26,8 +26,8 @@ sleep 4
 lxc exec "$1" --user 1000 -- sudo apt update
 
 # Install Docker
-lxc exec "$1" --user 1000 -- bash -c 'HOME=/home/ubuntu; export HOME; cd; curl -fsSL https://get.docker.com -o get-docker.sh; sh get-docker.sh'
 # TODO: Add user ubuntu to the docker group
+lxc exec "$1" --user 1000 -- bash -c 'HOME=/home/ubuntu; export HOME; cd; curl -fsSL https://get.docker.com -o get-docker.sh; sh get-docker.sh'
 
 # Git config
 lxc exec "$1" --user 1000 -- bash -c 'touch /home/ubuntu/.gitconfig'
