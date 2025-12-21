@@ -63,3 +63,10 @@ lxc exec "$1" --user 1000 -- git clone https://github.com/ChrisTaylorDeveloper/L
 # Install Java
 lxc exec "$1" --user 1000 -- sudo apt -y install default-jre
 lxc exec "$1" --user 1000 -- sudo apt -y install default-jdk
+
+# Install Coursier - might solve problem with jdtls.
+# Install after Java.
+lxc exec "$1" --user 1000 -- bash -c '
+  HOME=/home/ubuntu; export HOME; cd
+  curl -fL "https://github.com/coursier/launchers/raw/master/cs-x86_64-pc-linux.gz" | gzip -d > cs
+  chmod +x cs; yes | ./cs setup'
