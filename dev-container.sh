@@ -43,6 +43,7 @@ lxc exec "$1" --user 1000 -- sudo apt -y install build-essential
 lxc exec "$1" --user 1000 -- sudo apt -y install unzip
 
 # Install Node and NPM.
+# TODO: Try nvm.
 lxc exec "$1" --user 1000 -- sudo apt -y install nodejs
 lxc exec "$1" --user 1000 -- sudo apt -y install npm
 
