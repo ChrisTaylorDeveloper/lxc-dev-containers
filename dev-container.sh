@@ -42,7 +42,7 @@ lxc exec "$1" --user 1000 -- sh -c 'ssh-keygen -N "" -f /home/ubuntu/.ssh/id_ed2
 lxc exec "$1" --user 1000 -- sudo apt -y install build-essential
 lxc exec "$1" --user 1000 -- sudo apt -y install unzip
 
-# Install Node and Node package manager.
+# Install Node and NPM.
 lxc exec "$1" --user 1000 -- sudo apt -y install nodejs
 lxc exec "$1" --user 1000 -- sudo apt -y install npm
 
