@@ -56,6 +56,9 @@ lxc exec "$1" --user 1000 -- sudo apt -y install npm
 lxc exec "$1" --user 1000 -- sudo wget -O /usr/local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.11.5/nvim-linux-x86_64.appimage
 lxc exec "$1" --user 1000 -- sudo chmod 755 /usr/local/bin/nvim
 
+# Install Nvim Wipeout
+lxc exec "$1" --user 1000 -- git clone https://github.com/ChrisTaylorDeveloper/neovim-wipeout.git
+
 # Install my own LazyVim config
 lxc exec "$1" --user 1000 -- mkdir --parents /home/ubuntu/.config/nvim
 lxc exec "$1" --user 1000 -- git clone https://github.com/ChrisTaylorDeveloper/LazyVim.git /home/ubuntu/.config/nvim
@@ -66,7 +69,7 @@ lxc exec "$1" --user 1000 -- sudo apt -y install default-jdk
 
 # Install Coursier - might solve problem with jdtls.
 # Install after Java.
-lxc exec "$1" --user 1000 -- bash -c '
-  HOME=/home/ubuntu; export HOME; cd
-  curl -fL "https://github.com/coursier/launchers/raw/master/cs-x86_64-pc-linux.gz" | gzip -d > cs
-  chmod +x cs; yes | ./cs setup'
+# lxc exec "$1" --user 1000 -- bash -c '
+#   HOME=/home/ubuntu; export HOME; cd
+#   curl -fL "https://github.com/coursier/launchers/raw/master/cs-x86_64-pc-linux.gz" | gzip -d > cs
+#   chmod +x cs; yes | ./cs setup'
